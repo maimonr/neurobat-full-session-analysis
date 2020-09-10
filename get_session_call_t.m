@@ -1,6 +1,11 @@
-function [call_t, callIdx, nonCallIdx] = get_session_call_t(baseDir,expDate,timestamps)
+function [call_t, callIdx, nonCallIdx] = get_session_call_t(baseDir,expDate,sessionType,timestamps)
 
-cut_call_fname = fullfile(baseDir,'call_data',[datestr(expDate,'yyyymmdd') '_cut_call_data.mat']);
+switch sessionType
+    case {'vocal','communication'}
+        cut_call_fname = fullfile(baseDir,'call_data',[datestr(expDate,'yyyymmdd') '_cut_call_data.mat']);
+    case 'social'
+        cut_call_fname = fullfile(baseDir,'call_data',[datestr(expDate,'yyyymmdd') '_cut_call_data_' sessionType '.mat']);
+end
 if ~exist(cut_call_fname,'file')
     [call_t, callIdx, nonCallIdx] = deal(NaN);
     return

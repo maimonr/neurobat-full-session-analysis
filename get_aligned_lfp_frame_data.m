@@ -1,6 +1,6 @@
 function [lfp_interp, frame_data_rs, video_t_rs, lfp_fs] = get_aligned_lfp_frame_data(videoData,frame_ts_info,lfpData)
 
-winSize = 500;
+winSize = lfpData.winSize;
 max_artifact_fract = 0.01;
 freq_k = 2;
 roundingFactor = 1e2;

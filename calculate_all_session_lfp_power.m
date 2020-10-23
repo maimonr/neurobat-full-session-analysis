@@ -21,10 +21,11 @@ n_artifact_times = zeros(nChannel,nWin);
 
 for channel_k = 1:nChannel
     channel_csc = lfpData(channel_k,:);
-    for notch_k = 1:length(notchFilters)
-        channel_csc = filtfilt(notchFilters{notch_k},channel_csc);
+    if ~isempty(notchFilters)
+        for notch_k = 1:length(notchFilters)
+            channel_csc = filtfilt(notchFilters{notch_k},channel_csc);
+        end
     end
-    
     win_csc = channel_csc(sliding_win_idx);
     n_artifact_times(channel_k,:) = sum(abs(win_csc - mu(channel_k)) > artifact_nStd_factor*sigma(channel_k),1);
     for f_k = 1:nFreq
